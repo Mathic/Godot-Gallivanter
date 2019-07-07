@@ -38,7 +38,7 @@ func _process(delta):
 		$AnimatedSprite.animation = "forward"
 
 func _on_Player_body_entered(body):
-	hide()
+	# hide()
 	emit_signal("hit")
 	$CollisionShape2D.set_deferred("disabled", true)
 
