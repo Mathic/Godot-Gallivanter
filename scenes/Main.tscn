@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/Main.gd" type="Script" id=1]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
+
+[sub_resource type="PackedScene" id=1]
+_bundled = {
+"conn_count": 0,
+"conns": PoolIntArray(  ),
+"editable_instances": [  ],
+"names": PoolStringArray(  ),
+"node_count": 0,
+"node_paths": [  ],
+"nodes": PoolIntArray(  ),
+"variants": [  ],
+"version": 2
+}
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -1.31741, -0.682844, 0, 0, 0, 0, 1024.61, 0.369043, 0, 0, 0, 0, 1023.56, 764.063, 0, 0, 0, 0, -0.496442, 763.624, 0, 0, 0, 0, -1.31741, -0.682844 )
+}
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+Wolf = SubResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 768.0
+color = Color( 0.509804, 0.737255, 0.396078, 1 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 512.708, 381.028 )
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Position2D" parent="."]
+position = Vector2( 512, 384 )
+
+[node name="MobPath" type="Path2D" parent="."]
+position = Vector2( 1.71358, 1.54048 )
+scale = Vector2( 0.997678, 1.00279 )
+curve = SubResource( 2 )
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+position = Vector2( -1.31741, -0.682844 )
+rotation = 0.0010253
+[connection signal="hit" from="Player" to="." method="game_over"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
